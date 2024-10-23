@@ -1,7 +1,7 @@
 import { fetchBaseQuery, createApi } from '@reduxjs/toolkit/query/react';
 
 const baseQuery = fetchBaseQuery({
-  baseUrl: '',
+  baseUrl: 'https://todo-backend-85lk.onrender.com',
   prepareHeaders: (headers) => {
     const token = localStorage.getItem('accessToken')
     
