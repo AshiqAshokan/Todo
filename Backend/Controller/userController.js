@@ -46,7 +46,7 @@ const googleSignIn = async (req, res) => {
     try {
         const ticket = await client.verifyIdToken({
             idToken: token,
-            audience: 1038818047013-kbkd3pndcmp5p0hp79u9hvea1men57ip.apps.googleusercontent.com, 
+            audience: '1038818047013-kbkd3pndcmp5p0hp79u9hvea1men57ip.apps.googleusercontent.com', 
         });
 
         const payload = ticket.getPayload();
