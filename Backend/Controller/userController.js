@@ -51,8 +51,7 @@ const googleSignIn = async (req, res) => {
 
         const payload = ticket.getPayload();
         const { email, name } = payload;
-
-        /
+        
         let user = await User.findOne({ email });
         if (!user) {
             user = await User.create({ name, email, password: 'google-sign-in', google: true });
