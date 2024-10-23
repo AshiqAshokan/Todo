@@ -11,7 +11,7 @@ const UserRoutes =require("./Routes/userRoutes")
 const TaskRoutes = require("./Routes/taskRoutes")
 
 app.use(cors({
-    origin: 'http://localhost:3000' 
+    origin: 'https://todo-frontend-zc7j.onrender.com' 
   }));
 
 mongoose.connect(process.env.MONGO_URL).then(()=>{

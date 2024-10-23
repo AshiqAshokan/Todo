@@ -7,7 +7,7 @@ export default defineConfig({
     port: 3000,
     proxy: {
       '/api': {
-        target: 'http://localhost:7000',  
+        target: 'https://todo-backend-85lk.onrender.com',  
         changeOrigin: true,
         secure: false,
       },
