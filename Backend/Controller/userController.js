@@ -1,4 +1,6 @@
+const { OAuth2Client } = require('google-auth-library');
 const User=require('../Model/UserModel')
+const client = new OAuth2Client(1038818047013-kbkd3pndcmp5p0hp79u9hvea1men57ip.apps.googleusercontent.com);
 const asyncHandler = require('express-async-handler')
 const CryptoJS = require("crypto-js")
 const generateToken = require("../utils/generateToken")
@@ -39,6 +41,37 @@ const registerUser = asyncHandler(async(req,res)=>{
 
 })
 
+const googleSignIn = async (req, res) => {
+    const { token } = req.body;
+    try {
+        const ticket = await client.verifyIdToken({
+            idToken: token,
+            audience: 1038818047013-kbkd3pndcmp5p0hp79u9hvea1men57ip.apps.googleusercontent.com, 
+        });
+
+        const payload = ticket.getPayload();
+        const { email, name } = payload;
+
+        /
+        let user = await User.findOne({ email });
+        if (!user) {
+            user = await User.create({ name, email, password: 'google-sign-in', google: true });
+        }
+        const authToken = generateToken(user._id,user.userType)
+        res.status(201).json({
+            _id:user._id,
+            name:user.name,
+            email:user.email,
+            token: authToken,
+            })
+    
+    } catch (error) {
+        console.error(error);
+        res.status(400).json({ message: "Google sign-in failed!" });
+    }
+};
+    
+
 const authUser = asyncHandler(async(req,res)=>{
     console.log("Logged In")
     const {email,password}=req.body
@@ -74,4 +107,4 @@ const authUser = asyncHandler(async(req,res)=>{
       }) 
 })
 
-module.exports = {registerUser,authUser}
+module.exports = {registerUser,authUser,googleSignIn}
