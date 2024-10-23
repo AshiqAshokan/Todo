@@ -3,8 +3,9 @@ import { FcGoogle } from 'react-icons/fc';
 import { AiFillEye, AiFillEyeInvisible } from 'react-icons/ai';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { useRegisterMutation } from '../Slice/UserApiSlice';
+import { useRegisterMutation,useGoogleSignInMutation  } from '../Slice/UserApiSlice';
 import { useNavigate } from 'react-router-dom';
+import { GoogleOAuthProvider, GoogleLogin } from '@react-oauth/google';
 
 const UserRegistration = () => {
   const [name, setName] = useState('');
@@ -15,6 +16,7 @@ const UserRegistration = () => {
   const [showConfirmPassword, setShowConfirmPassword] = useState(false); 
   const [isLoading, setIsLoading] = useState(false);
   const [register] = useRegisterMutation(); 
+  const [googleSignIn] = useGoogleSignInMutation();
   const navigate = useNavigate(); 
 
   const handleSubmit = async (e)=>{
@@ -38,6 +40,20 @@ const UserRegistration = () => {
       setIsLoading(false);
     }
   }
+    const handleGoogleSuccess = async (credentialResponse) => {
+    const { credential } = credentialResponse;
+    try {
+      const res = await googleSignIn({ token: credential }).unwrap();
+      toast.success("Google sign-in successful!");
+      navigate('/');
+    } catch (err) {
+      toast.error(err?.data?.message || "An error occurred during Google sign-in");
+    }
+  };
+
+  const handleGoogleFailure = (response) => {
+    toast.error("Google sign-in failed!");
+  };
 
   return (
     <section className="bg-gray-50">
@@ -132,13 +148,14 @@ const UserRegistration = () => {
               {isLoading ? 'Creating account...' : 'Create an account'}
             </button>
 
-            <button
-              type="button"
-              className="w-full flex items-center justify-center text-gray-900 bg-gradient-to-r from-lime-200 via-lime-400 to-lime-500 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-lime-300 dark:focus:ring-lime-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mb-2"
-            >
-              <FcGoogle className="w-5 h-5 mr-2" />
-              Sign up with Google
-            </button>
+             <GoogleOAuthProvider clientId={1038818047013-kbkd3pndcmp5p0hp79u9hvea1men57ip.apps.googleusercontent.com}>
+                <GoogleLogin
+                  onSuccess={handleGoogleSuccess}
+                  onFailure={handleGoogleFailure}
+                  buttonText="Sign in with Google"
+                  className="w-full flex items-center justify-center text-gray-900 bg-gradient-to-r from-lime-200 via-lime-400 to-lime-500 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-lime-300 dark:focus:ring-lime-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mb-2"
+                />
+              </GoogleOAuthProvider>
           </form>
         </div>
       </div>
