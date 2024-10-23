@@ -148,7 +148,7 @@ const UserRegistration = () => {
               {isLoading ? 'Creating account...' : 'Create an account'}
             </button>
 
-             <GoogleOAuthProvider clientId={1038818047013-kbkd3pndcmp5p0hp79u9hvea1men57ip.apps.googleusercontent.com}>
+             <GoogleOAuthProvider clientId="1038818047013-kbkd3pndcmp5p0hp79u9hvea1men57ip.apps.googleusercontent.com">
                 <GoogleLogin
                   onSuccess={handleGoogleSuccess}
                   onFailure={handleGoogleFailure}
