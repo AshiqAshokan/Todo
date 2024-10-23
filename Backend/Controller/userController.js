@@ -1,6 +1,6 @@
 const { OAuth2Client } = require('google-auth-library');
 const User=require('../Model/UserModel')
-const client = new OAuth2Client(1038818047013-kbkd3pndcmp5p0hp79u9hvea1men57ip.apps.googleusercontent.com);
+const client = new OAuth2Client('1038818047013-kbkd3pndcmp5p0hp79u9hvea1men57ip.apps.googleusercontent.com');
 const asyncHandler = require('express-async-handler')
 const CryptoJS = require("crypto-js")
 const generateToken = require("../utils/generateToken")
