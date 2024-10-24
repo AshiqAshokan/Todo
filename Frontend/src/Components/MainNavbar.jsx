@@ -6,7 +6,7 @@ import { setCredentials } from '../Slice/authSlice';
 import { useLoginMutation,useGoogleSignUpMutation  } from '../Slice/UserApiSlice';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import { GoogleLogin } from '@react-oauth/google';
+import { GoogleOAuthProvider,GoogleLogin } from '@react-oauth/google';
 
 const MainNavbar = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
