@@ -42,7 +42,7 @@ const registerUser = asyncHandler(async(req,res)=>{
 })
 
 const googleSignIn = async (req, res) => {
-    console.log(req.body);
+    console.log("body contained:",req.body);
     const { token } = req.body;
     try {
         const ticket = await client.verifyIdToken({
