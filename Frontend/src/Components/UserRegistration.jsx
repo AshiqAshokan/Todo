@@ -54,6 +54,7 @@ const UserRegistration = () => {
   };
 
   const handleGoogleFailure = (response) => {
+    console.error('Google login failed', response);
     toast.error("Google sign-in failed!");
   };
 
