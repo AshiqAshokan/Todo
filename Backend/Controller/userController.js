@@ -71,6 +71,40 @@ const googleSignIn = async (req, res) => {
         res.status(400).json({ message: "Google sign-in failed!" });
     }
 };
+
+const googleLogin = async(req,res)=>{
+    console.log("Google Login request body:", req.body);
+    const token = req.body.token.token; 
+    console.log("Received token:", token);
+    try{
+          const ticket = await client.verifyIdToken({
+            idToken: token,
+            audience: '1038818047013-kbkd3pndcmp5p0hp79u9hvea1men57ip.apps.googleusercontent.com', 
+        });
+         const payload = ticket.getPayload();
+         const { email, name } = payload;
+
+        let user = await User.findOne({ email });
+          if (!user) {
+            return res.status(400).json({ message: "User not registered with Google." });
+        }
+         
+        const authToken = generateToken(user._id, user.userType);
+        
+
+        res.status(200).json({
+            _id: user._id,
+            name: user.name,
+            email: user.email,
+            token: authToken,
+        });
+    }
+    catch (error) {
+        console.error("Google Login error:", error);
+        res.status(400).json({ message: "Google login failed!" });
+    }
+}
+    
     
 
 const authUser = asyncHandler(async(req,res)=>{
@@ -108,4 +142,4 @@ const authUser = asyncHandler(async(req,res)=>{
       }) 
 })
 
-module.exports = {registerUser,authUser,googleSignIn}
+module.exports = {registerUser,authUser,googleSignIn,googleLogin}
