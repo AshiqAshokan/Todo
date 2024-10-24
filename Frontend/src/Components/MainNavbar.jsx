@@ -48,6 +48,10 @@ const MainNavbar = () => {
       toast.error(error?.data?.message || 'Google login failed');
     }
   };
+    const handleGoogleLoginFailure = (error) => {
+    console.error('Google login error:', error);
+    toast.error('Google login failed');
+  };
 
   return (
     <div>
@@ -154,10 +158,14 @@ const MainNavbar = () => {
                     {isLoading ? 'Logging in...' : 'Login'}
                   </button>
 
-                    <GoogleLogin
-                    onSuccess={handleGoogleLoginSuccess}
-                    onError={() => toast.error('Google login failed')}
-                  />
+                      <GoogleOAuthProvider clientId="1038818047013-kbkd3pndcmp5p0hp79u9hvea1men57ip.apps.googleusercontent.com">
+                <GoogleLogin
+                  onSuccess={handleGoogleLoginSuccess}
+                  onFailure={handleGoogleFailure}
+                  buttonText="Sign in with Google"
+                  className="w-full flex items-center justify-center text-gray-900 bg-gradient-to-r from-lime-200 via-lime-400 to-lime-500 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-lime-300 dark:focus:ring-lime-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mb-2"
+                />
+              </GoogleOAuthProvider>
               
                 </form>
               </div>
