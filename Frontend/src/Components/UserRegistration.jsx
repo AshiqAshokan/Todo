@@ -41,7 +41,9 @@ const UserRegistration = () => {
     }
   }
     const handleGoogleSuccess = async (credentialResponse) => {
+      console.log(credentialResponse);
     const { credential } = credentialResponse;
+      
     try {
       const res = await googleSignIn({ token: credential }).unwrap();
       toast.success("Google sign-in successful!");
