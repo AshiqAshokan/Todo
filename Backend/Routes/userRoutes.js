@@ -5,6 +5,6 @@ const protect = require("../middleware/authMiddleware")
 Router.post('/register',registerUser)
 Router.post('/login',authUser) 
 Router.post('/google-signin', googleSignIn);
-Router.post('/google-signin',googleLogin);
+Router.post('/google-signup',googleLogin);
 
 module.exports=Router
