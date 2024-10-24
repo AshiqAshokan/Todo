@@ -48,7 +48,7 @@ const MainNavbar = () => {
       toast.error(error?.data?.message || 'Google login failed');
     }
   };
-    const handleGoogleLoginFailure = (error) => {
+    const handleGoogleFailure = (error) => {
     console.error('Google login error:', error);
     toast.error('Google login failed');
   };
