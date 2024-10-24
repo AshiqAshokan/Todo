@@ -42,7 +42,14 @@ const MainNavbar = () => {
     try {
       const res = await googleSignIn({ token: response.credential }).unwrap();
       console.log('Google sign-in success:', res); 
-      dispatch(setCredentials({ user: res.user, token: res.accessToken }));
+      dispatch(setCredentials({ 
+      user: { 
+        _id: res._id, 
+        name: res.name, 
+        email: res.email 
+      }, 
+      token: res.token 
+    }));
       toast.success('Google login successful!');
       navigate('/userpage');
     } catch (error) {
