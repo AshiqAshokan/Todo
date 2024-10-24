@@ -41,6 +41,7 @@ const MainNavbar = () => {
     const handleGoogleLoginSuccess = async (response) => {
     try {
       const res = await googleSignIn({ token: response.credential }).unwrap();
+      console.log('Google sign-in success:', res); 
       dispatch(setCredentials({ user: res.user, token: res.accessToken }));
       toast.success('Google login successful!');
       navigate('/userpage');
